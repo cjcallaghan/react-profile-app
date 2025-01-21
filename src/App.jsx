@@ -1,23 +1,36 @@
-import { useState } from 'react'
 import './App.css'
+import Navbar from "./components/Navbar";
+import About from "./components/About";
+import Card1 from "./components/Card1";
+import Card2 from "./components/Card2";
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header>
+        <Navbar />
+      </header>
+      <main>
+        <div className='section'>
+          <div className='container'>
+            <h1>Profile App</h1>
+          </div>
+        </div>
+        <div className='section'>
+          <div className='container'>
+            <About />
+          </div>
+        </div>
+        <div className='section'>
+          <div className='container'>
+            <div className='profile-cards'>
+              <Card1 />
+              <Card2 />
+            </div>
+          </div>
+        </div>
+      </main>
     </>
   )
 }
