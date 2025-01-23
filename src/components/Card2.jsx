@@ -1,9 +1,9 @@
-import img from '../assets/headshot-woman.png'
+import img from '../assets/giraffe.png'
 
 const Card2 = () => {
-    const name = "Jane Doe";
-    const title = "Computer Engineer";
-    const email = "a@a.com"
+    const name = "Giraffe Gal";
+    const title = "Treetop Inspector";
+    const email = "purpletongue@leaves.com"
 
     return (
         <div className="profile-card">

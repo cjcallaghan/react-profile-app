@@ -1,0 +1,59 @@
+/* I got the base of this code using AI and then edited it to my liking */
+
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f9f9f9; /* Light background for contrast */
+    color: #333; /* Dark text for readability */
+}
+
+/* Main Section */
+main {
+    padding: 2rem 1rem; /* Add spacing around content */
+    max-width: 1200px; /* Constrain content to a max width */
+    margin: 0 auto; /* Center content */
+}
+
+/* Section Styles */
+.section {
+    margin-bottom: 0.5rem; /* Space between sections */
+    padding: 1rem;
+}
+
+/* Container Styles */
+.container {
+    max-width: 900px; /* Constrain container width */
+    margin: 0 auto; /* Center container */
+    text-align: center; /* Center-align text */
+}
+
+/* Profile Cards */
+.profile-cards {
+    display: flex;
+    flex-wrap: wrap; /* Allow cards to wrap on smaller screens */
+    gap: 1rem; /* Space between cards */
+    justify-content: center; /* Center cards */
+}
+
+.profile-card {
+    flex: 1 1 calc(50% - 1.5rem); /* Make cards responsive */
+    max-width: 200px; /* Limit card width */
+    margin: 0 auto; /* Center-align card */
+}
+
+h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff; /* Link color */
+}
+
+a:hover {
+    text-decoration: underline;
+}

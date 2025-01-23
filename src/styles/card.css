@@ -1,0 +1,60 @@
+/* I got the base of this code using AI and then edited it to my liking */
+
+.profile-card {
+    max-width: 150px;
+    border: 1px solid #ddd; /* Subtle border for structure */
+    border-radius: 8px; /* Rounded corners */
+    font-family: Arial, sans-serif;
+    background-color: #fff; /* White background */
+}
+
+/* Profile Image */
+.profile-card__img img {
+    width: 50%; /* Make the circle size relative to the card width */
+    aspect-ratio: 1 / 1; /* Keep it perfectly square */
+    border-radius: 50%; /* Create the circular shape */
+    border: 3px solid black; /* Black border */
+    object-fit: cover; /* Maintain aspect ratio of the image */
+    display: block;
+}
+
+/* profile card image container */
+.profile-card__img {
+    width: 100%; /* Spans the full width of the card */
+    display: flex;
+    justify-content: center; /* Center the image horizontally */
+    align-items: center; /* Center the image vertically */
+    margin-bottom: 0.2rem; /* Add spacing below the image */
+    margin-top: 1.8rem; /* Add spacing below the image */
+}
+
+/* Profile Content */
+.profile-card__content {
+    padding: 1rem; /* Padding around the content */
+    text-align: center; /* Center-align the text */
+}
+
+/* Profile Name and Title */
+.profile-card__content p:first-child {
+    font-size: 1rem; /* Larger font for name */
+    font-weight: bold; /* Make the name stand out */
+    margin-bottom: 0.5rem;
+}
+
+.profile-card__content p:nth-child(2) {
+    font-size: 0.7rem; /* Slightly smaller font for title */
+    color: #555; /* Light gray color */
+    margin-bottom: 1rem;
+}
+
+/* Email Link */
+.profile-card__content a {
+    font-size: 0.8rem; /* Larger font for name */
+    color: #007bff; /* Link color (blue) */
+    text-decoration: none; /* Remove underline */
+    transition: color 0.3s ease; /* Smooth transition */
+}
+
+.profile-card__content a:hover {
+    color: #0056b3; /* Darker blue on hover */
+}

@@ -1,9 +1,10 @@
-import img from '../assets/headshot-man.png'
+import img from '../assets/monkey.png';
+import "../styles/card.css";
 
 const Card1 = () => {
-    const name = "John Doe";
-    const title = "Software Engineer";
-    const email = "a@a.com"
+    const name = "Monkey Man";
+    const title = "Banana Specialist";
+    const email = "ooah@swing.com"
 
     return (
         <div className="profile-card">
