@@ -7,6 +7,7 @@ import img_monkey from './assets/monkey.png';
 import img_giraffe from './assets/giraffe.png';
 import Card from "./components/Card";
 import Wrapper from "./components/Wrapper";
+import {useState} from "react";
 
 function App() {
 	const profiles = [
@@ -21,8 +22,71 @@ function App() {
 			name: "Giraffe Gal",
 			title: "Treetop Inspector",
 			email: "purpletongue@leaves.com"
+		},
+		{
+			img: img_monkey,
+			name: "Monkey Man 2",
+			title: "A",
+			email: "a@swing.com"
+		},
+		{
+			img: img_giraffe,
+			name: "Giraffe Gal 2",
+			title: "B",
+			email: "b@leaves.com"
+		},
+		{
+			img: img_monkey,
+			name: "Monkey Man 3",
+			title: "C",
+			email: "c@swing.com"
+		},
+		{
+			img: img_giraffe,
+			name: "Giraffe Gal 3",
+			title: "D",
+			email: "d@leaves.com"
+		},
+		{
+			img: img_monkey,
+			name: "Monkey Man 4",
+			title: "Banana Specialist",
+			email: "e@swing.com"
+		},
+		{
+			img: img_giraffe,
+			name: "Giraffe Gal 4",
+			title: "Treetop Inspector",
+			email: "f@leaves.com"
 		}
 	]
+
+	// const titles = [...new Set]
+
+	const [title, setTitle] = useState("");
+	//update title on dropdown change
+	const handleTitleChange = (e) => {
+		setTitle(e.target.value);
+	};
+
+
+	//search
+	const [searchInput, setSearchInput] = useState("");
+	const handleSearchChange = (e) => {
+		e.preventDefault();
+		setSearchInput(e.target.value);
+	};
+
+	const handleClear = () => {
+		setTitle("");
+		setSearchInput("");
+	}
+
+	//filter
+	const filterProfiles = profiles.filter((profile) => 
+		(title === "" || profile.title === title) && profile.name.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase())
+	)
+	//
 
 	return (
 		<>
@@ -37,13 +101,30 @@ function App() {
 					<About />
 				</Wrapper>
 				<Wrapper>
+					<div className="filter-wrapper">
+						<div className="filter-select">
+							<label htmlFor="title-select">Select a Title:</label>
+							<select id="title-select" onChange={handleTitleChange} value={title}>
+								{/* titles.map((title) => (option key={title} value={title})) */}
+								<option value="">All</option>
+								<option value="Banana Specialist">Banana Specialist</option>
+								<option value="Treetop Inspector">Treetop Inspector</option>
+								<option value="A">A</option>
+								<option value="B">B</option>
+								<option value="C">C</option>
+								<option value="D">D</option>
+							</select>
+						</div>
+					</div>
+					<div className="search-wrapper">
+						<div className="search-input">
+							<label htmlFor="search-input">Search:</label>
+							<input className="search-input" type="text" onChange={handleSearchChange} value={searchInput}></input>
+						</div>
+						<button onClick={handleClear}>Clear</button>
+					</div>
 					<div className='profile-cards'>
-						{/* {profiles.map(profile => <Card key={profile.email} img={profile.img} name={profile.name} title={profile.title} email={profile.email} />)} */}
-						{/* Same thing ^ */}
-						{profiles.map(profile => <Card key={profile.email} {...profile} />)}
-
-						{/* <Card1 />
-						<Card2 /> */}
+						{filterProfiles.map(profile => <Card key={profile.email} {...profile} />)}
 					</div>
 				</Wrapper>
 			</main>
