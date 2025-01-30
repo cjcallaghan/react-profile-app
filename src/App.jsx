@@ -61,12 +61,27 @@ function App() {
 		}
 	]
 
+	//animation stuff
+	const [animation, setAnimation] = useState(false);
+
+	const handleAnimation = () => {
+		setAnimation(false);
+	}
+
+	//dark mode stuff
+	const [mode, setMode] = useState(false);
+
+	const handleMode = () => {
+		setMode(!mode);
+	}
+
 	// const titles = [...new Set]
 
 	const [title, setTitle] = useState("");
 	//update title on dropdown change
 	const handleTitleChange = (e) => {
 		setTitle(e.target.value);
+		setAnimation(true);
 	};
 
 
@@ -75,25 +90,37 @@ function App() {
 	const handleSearchChange = (e) => {
 		e.preventDefault();
 		setSearchInput(e.target.value);
+		setAnimation(true);
 	};
 
 	const handleClear = () => {
 		setTitle("");
 		setSearchInput("");
+		setAnimation(true);
 	}
 
 	//filter
 	const filterProfiles = profiles.filter((profile) => 
 		(title === "" || profile.title === title) && profile.name.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase())
 	)
-	//
+	
+	const buttonStyle = {
+		backgroundColor: "white",
+  		color: "black",
+  		border: "2px solid #555555",
+
+		"&:hover": {
+			backgroundColor: "#555555",
+  			color: "white"
+		}
+	}
 
 	return (
 		<>
 			<header>
-				<Navbar />
+				<Navbar mode={mode} updateMode={handleMode}/>
 			</header>
-			<main>
+			<main className={mode ? "darkMode" : ""}>
 				<Wrapper>
 					<h1>Profile App</h1>
 				</Wrapper>
@@ -121,10 +148,11 @@ function App() {
 							<label htmlFor="search-input">Search:</label>
 							<input className="search-input" type="text" onChange={handleSearchChange} value={searchInput}></input>
 						</div>
-						<button onClick={handleClear}>Clear</button>
+						<button style={buttonStyle} onClick={handleClear}>Clear</button>
 					</div>
 					<div className='profile-cards'>
-						{filterProfiles.map(profile => <Card key={profile.email} {...profile} />)}
+						{filterProfiles.map(profile => <Card key={profile.email} {...profile} animation={animation} 
+							updateAnimation={handleAnimation}/>)}
 					</div>
 				</Wrapper>
 			</main>

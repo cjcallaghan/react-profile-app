@@ -3,6 +3,8 @@
 .navbar {
     background-color: #2c3e50; /* Dark blue background */
     padding: 1rem 2rem; /* Add some padding for spacing */
+    display: flex;
+    justify-content: space-between;
 }
 
 .navbar ul {
@@ -31,4 +33,18 @@
 
 .navbar a:active {
     color: #16a085; /* Slightly darker teal for active state */
+}
+
+.navbar button {
+    background-color: gray; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 10px 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 1px 1px;
+    cursor: pointer;
+    border-radius: 8px;
 }

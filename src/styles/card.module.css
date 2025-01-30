@@ -1,4 +1,14 @@
 /* I got the base of this code using AI and then edited it to my liking */
+@keyframes cardEnter {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
 
 .profile-card {
     max-width: 150px;
@@ -6,6 +16,12 @@
     border-radius: 8px; /* Rounded corners */
     font-family: Arial, sans-serif;
     background-color: #fff; /* White background */
+    color: #333; /* Dark text for readability */
+    &.is-entering {
+        opacity: 0;
+        transform: scale(0.9);
+        animation: cardEnter 0.5s forwards;
+    }
 }
 
 /* Profile Image */

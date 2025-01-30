@@ -8,6 +8,10 @@ body {
     box-sizing: border-box;
     background-color: #f9f9f9; /* Light background for contrast */
     color: #333; /* Dark text for readability */
+    &.darkMode {
+        background-color: #333; /* Light background for contrast */
+        color: #f9f9f9; /* Dark text for readability */
+    }
 }
 
 /* Main Section */
@@ -15,6 +19,10 @@ main {
     padding: 2rem 1rem; /* Add spacing around content */
     max-width: 1200px; /* Constrain content to a max width */
     margin: 0 auto; /* Center content */
+    &.darkMode {
+        background-color: #333; /* Light background for contrast */
+        color: #f9f9f9; /* Dark text for readability */
+    }
 }
 
 /* Section Styles */
