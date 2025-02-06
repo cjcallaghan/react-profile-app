@@ -7,6 +7,7 @@ import img_monkey from './assets/monkey.png';
 import img_giraffe from './assets/giraffe.png';
 import Card from "./components/Card";
 import Wrapper from "./components/Wrapper";
+import ProfileForm from "./components/ProfileForm";
 import {useState} from "react";
 
 function App() {
@@ -126,6 +127,9 @@ function App() {
 				</Wrapper>
 				<Wrapper>
 					<About />
+				</Wrapper>
+				<Wrapper>
+					<ProfileForm/>
 				</Wrapper>
 				<Wrapper>
 					<div className="filter-wrapper">
