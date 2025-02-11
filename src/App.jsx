@@ -9,58 +9,67 @@ import Card from "./components/Card";
 import Wrapper from "./components/Wrapper";
 import ProfileForm from "./components/ProfileForm";
 import {useState} from "react";
+import {useEffect} from "react";
 
 function App() {
-	const profiles = [
-		{
-			img: img_monkey,
-			name: "Monkey Man",
-			title: "Banana Specialist",
-			email: "ooah@swing.com"
-		},
-		{
-			img: img_giraffe,
-			name: "Giraffe Gal",
-			title: "Treetop Inspector",
-			email: "purpletongue@leaves.com"
-		},
-		{
-			img: img_monkey,
-			name: "Monkey Man 2",
-			title: "A",
-			email: "a@swing.com"
-		},
-		{
-			img: img_giraffe,
-			name: "Giraffe Gal 2",
-			title: "B",
-			email: "b@leaves.com"
-		},
-		{
-			img: img_monkey,
-			name: "Monkey Man 3",
-			title: "C",
-			email: "c@swing.com"
-		},
-		{
-			img: img_giraffe,
-			name: "Giraffe Gal 3",
-			title: "D",
-			email: "d@leaves.com"
-		},
-		{
-			img: img_monkey,
-			name: "Monkey Man 4",
-			title: "Banana Specialist",
-			email: "e@swing.com"
-		},
-		{
-			img: img_giraffe,
-			name: "Giraffe Gal 4",
-			title: "Treetop Inspector",
-			email: "f@leaves.com"
-		}
-	]
+	// const profiles = [(
+	// 	{
+	// 		img: img_monkey,
+	// 		name: "Monkey Man",
+	// 		title: "Banana Specialist",
+	// 		email: "ooah@swing.com"
+	// 	},
+	// 	{
+	// 		img: img_giraffe,
+	// 		name: "Giraffe Gal",
+	// 		title: "Treetop Inspector",
+	// 		email: "purpletongue@leaves.com"
+	// 	},
+	// 	{
+	// 		img: img_monkey,
+	// 		name: "Monkey Man 2",
+	// 		title: "A",
+	// 		email: "a@swing.com"
+	// 	},
+	// 	{
+	// 		img: img_giraffe,
+	// 		name: "Giraffe Gal 2",
+	// 		title: "B",
+	// 		email: "b@leaves.com"
+	// 	},
+	// 	{
+	// 		img: img_monkey,
+	// 		name: "Monkey Man 3",
+	// 		title: "C",
+	// 		email: "c@swing.com"
+	// 	},
+	// 	{
+	// 		img: img_giraffe,
+	// 		name: "Giraffe Gal 3",
+	// 		title: "D",
+	// 		email: "d@leaves.com"
+	// 	},
+	// 	{
+	// 		img: img_monkey,
+	// 		name: "Monkey Man 4",
+	// 		title: "Banana Specialist",
+	// 		email: "e@swing.com"
+	// 	},
+	// 	{
+	// 		img: img_giraffe,
+	// 		name: "Giraffe Gal 4",
+	// 		title: "Treetop Inspector",
+	// 		email: "f@leaves.com"
+	// 	}
+	// ]
+
+	const [profiles, setProfiles] = useState([])
+
+	useEffect(() => {
+		fetch("https://web.ics.purdue.edu/~ccallag/profile-app/fetch-data.php")
+			.then(res => res.json())
+			.then(data => setProfiles(data));
+	},[])
 
 	//animation stuff
 	const [animation, setAnimation] = useState(false);
@@ -155,7 +164,7 @@ function App() {
 						<button style={buttonStyle} onClick={handleClear}>Clear</button>
 					</div>
 					<div className='profile-cards'>
-						{filterProfiles.map(profile => <Card key={profile.email} {...profile} animation={animation} 
+						{filterProfiles.map(profile => <Card key={profile.id} {...profile} animation={animation} 
 							updateAnimation={handleAnimation}/>)}
 					</div>
 				</Wrapper>
