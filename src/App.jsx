@@ -10,6 +10,7 @@ import Wrapper from "./components/Wrapper";
 import ProfileForm from "./components/ProfileForm";
 import {useState} from "react";
 import {useEffect} from "react";
+//import {faCheveronLeft}
 
 function App() {
 	// const profiles = [(
@@ -63,36 +64,43 @@ function App() {
 	// 	}
 	// ]
 
-	const [profiles, setProfiles] = useState([])
+	
 
-	useEffect(() => {
-		fetch("https://web.ics.purdue.edu/~ccallag/profile-app/fetch-data.php")
-			.then(res => res.json())
-			.then(data => setProfiles(data));
-	},[])
+	// //animation stuff
+	// const [animation, setAnimation] = useState(false);
 
-	//animation stuff
-	const [animation, setAnimation] = useState(false);
-
-	const handleAnimation = () => {
-		setAnimation(false);
-	}
+	// const handleAnimation = () => {
+	// 	setAnimation(false);
+	// }
 
 	//dark mode stuff
 	const [mode, setMode] = useState(false);
+
+	const [profiles, setProfiles] = useState([]);
+	const [page, setPage] = useState(1);
+	const [count, setCount] = useState(1);
 
 	const handleMode = () => {
 		setMode(!mode);
 	}
 
 	// const titles = [...new Set]
+	const [titles, setTitles] = useState([]);
+	useEffect(() => {
+		fetch("https://web.ics.purdue.edu/~ccallag/profile-app/get-titles.php")
+			.then(res => res.json())
+			.then(data => setTitles(data.titles));
+	}, [])
 
 	const [title, setTitle] = useState("");
 	//update title on dropdown change
 	const handleTitleChange = (e) => {
 		setTitle(e.target.value);
-		setAnimation(true);
+		setPage(1)
+		// setAnimation(true);
 	};
+
+	
 
 
 	//search
@@ -100,19 +108,28 @@ function App() {
 	const handleSearchChange = (e) => {
 		e.preventDefault();
 		setSearchInput(e.target.value);
-		setAnimation(true);
+		setPage(1)
+		// setAnimation(true);
 	};
+	
+	
+
+	useEffect(() => {
+		fetch(`https://web.ics.purdue.edu/~ccallag/profile-app/fetch-data-with-filter.php?title=${title}&name=${searchInput}&page=${page}&limit=10`)
+			.then(res => res.json())
+			.then(data =>{ 
+				setProfiles(data.profiles)
+				setCount(data.count)
+				setPage(data.page)
+			});
+	},[title, searchInput, page])
 
 	const handleClear = () => {
 		setTitle("");
 		setSearchInput("");
-		setAnimation(true);
+		setPage(1)
+		// setAnimation(true);
 	}
-
-	//filter
-	const filterProfiles = profiles.filter((profile) => 
-		(title === "" || profile.title === title) && profile.name.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase())
-	)
 	
 	const buttonStyle = {
 		backgroundColor: "white",
@@ -145,14 +162,12 @@ function App() {
 						<div className="filter-select">
 							<label htmlFor="title-select">Select a Title:</label>
 							<select id="title-select" onChange={handleTitleChange} value={title}>
-								{/* titles.map((title) => (option key={title} value={title})) */}
 								<option value="">All</option>
-								<option value="Banana Specialist">Banana Specialist</option>
-								<option value="Treetop Inspector">Treetop Inspector</option>
-								<option value="A">A</option>
-								<option value="B">B</option>
-								<option value="C">C</option>
-								<option value="D">D</option>
+								{titles.map((title) => (
+									<option key={title} value={title}>
+										{title}
+									</option>
+								))}
 							</select>
 						</div>
 					</div>
@@ -164,9 +179,17 @@ function App() {
 						<button style={buttonStyle} onClick={handleClear}>Clear</button>
 					</div>
 					<div className='profile-cards'>
-						{filterProfiles.map(profile => <Card key={profile.id} {...profile} animation={animation} 
-							updateAnimation={handleAnimation}/>)}
+						{profiles.map(profile => <Card key={profile.id} {...profile}/>)}
 					</div>
+					{count === 0 && <p>No profiles found.</p>}
+					{count > 10 &&
+						<div id="pagination">
+							<button onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
+							<span>{page}/{Math.ceil(count/10)}</span>
+							<button onClick={() => setPage(page + 1)} disabled={page >= Math.ceil(count/10)}>Next</button>
+						</div>
+					}	
+					
 				</Wrapper>
 			</main>
 		</>

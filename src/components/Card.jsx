@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const Card = ({id, image_url, name, title, email, animation, updateAnimation}) => {
 
     return (
-        <div className={`${style["profile-card"]} ${animation ? style["is-entering"] : ""}`}
+        <div className={`${style["profile-card"]} ${style["is-entering"]}`}
         onAnimationEnd={updateAnimation}
         >
 
