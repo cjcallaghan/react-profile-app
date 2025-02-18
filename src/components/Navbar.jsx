@@ -1,4 +1,5 @@
 import style from "../styles/navbar.module.css";
+import {Link} from "react-router-dom";
 
 const Navbar = ({updateMode}) => {
 
@@ -7,13 +8,13 @@ const Navbar = ({updateMode}) => {
         <nav className={style.navbar}>
             <ul>
                 <li>
-                    <a href="#">Home</a>
+                    <Link to="/">Home</Link>
                 </li>
                 <li>
-                    <a href="#">About</a>
+                    <Link to="/add-profile">Add Profile</Link>
                 </li>
                 <li>
-                    <a href="#">Profiles</a>
+                    <Link to="/about">About</Link>
                 </li>
             </ul>
             <button className={style.mode} onClick={(updateMode)}>Mode</button>
