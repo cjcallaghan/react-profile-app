@@ -4,6 +4,7 @@ import Card from "../components/Card";
 import Wrapper from "../components/Wrapper";
 import {useState} from "react";
 import {useEffect} from "react";
+import { Link } from "react-router-dom";
 
 
 function HomePage() {
@@ -96,7 +97,11 @@ function HomePage() {
 					<button style={buttonStyle} onClick={handleClear}>Clear</button>
 				</div>
 				<div className='profile-cards'>
-					{profiles.map(profile => <Card key={profile.id} {...profile}/>)}
+					{profiles.map((profile) => (
+						<Link to={`/profile/${profile.id}`} key={profile.id}>
+							<Card {...profile}/>
+						</Link>
+					))}
 				</div>
 				{count === 0 && <p>No profiles found.</p>}
 				{count > 10 &&
