@@ -1,8 +1,11 @@
 import style from "../styles/navbar.module.css";
 import {Link} from "react-router-dom";
+import { ModeContext } from "../contexts/ModeContext";
+import { useContext } from "react";
 
-const Navbar = ({updateMode}) => {
+const Navbar = () => {
 
+    const {mode, handleModeChange} = useContext(ModeContext)
 
     return (
         <nav className={style.navbar}>
@@ -17,7 +20,7 @@ const Navbar = ({updateMode}) => {
                     <Link to="/about">About</Link>
                 </li>
             </ul>
-            <button className={style.mode} onClick={(updateMode)}>Mode</button>
+            <button className={style.mode} onClick={(handleModeChange)}>Mode</button>
         </nav>
     );
 }
