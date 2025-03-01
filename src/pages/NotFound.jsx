@@ -4,7 +4,7 @@ import '../styles/App.css';
 import Wrapper from "../components/Wrapper";
 import {Link} from "react-router-dom";
 
-function AddProfilePage() {
+function NotFound() {
 
 	return (
 		<>
@@ -17,4 +17,4 @@ function AddProfilePage() {
 	)
 }
 
-export default AddProfilePage
+export default NotFound

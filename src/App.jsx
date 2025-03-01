@@ -12,6 +12,10 @@ import { useState } from "react";
 import { HashRouter, Routes, Route, Link } from "react-router-dom";
 import { ModeProvider, ModeContext } from "./contexts/ModeContext"
 import { useContext } from "react";
+import LoginPage from "./pages/LoginPage"
+import RegisterPage from "./pages/RegisterPage"
+import {AuthProvider} from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute"
 
 function App() {
 
@@ -27,22 +31,28 @@ function App() {
 
 
 		<HashRouter>
-			<header>
-				<Navbar />
-			</header>
-			<main className={mode ? "darkMode" : ""}>
-				<Routes>
-					<Route path="/" element={<HomePage />}></Route>
-					<Route path="/add-profile" element={<AddProfilePage />}></Route>
-					<Route path="profile/:id" element={<ProfileLayoutPage />}>
-						<Route index element={<ProfileDetailPage />}></Route>
-						<Route path="edit" element={<ProfileEditPage />}></Route>
-					</Route>
-					<Route path="/about" element={<AboutPage />}></Route>
-					<Route path="*" element={<NotFound />}></Route>
-				</Routes>
-			</main>
+			<AuthProvider>
+				<header>
+					<Navbar />
+				</header>
+				<main className={mode ? "darkMode" : ""}>
+					<Routes>
+						<Route path="/" element={<HomePage />}></Route>
+						<Route path="/add-profile" element={<ProtectedRoute><AddProfilePage /></ProtectedRoute>}></Route>
+						<Route path="profile/:id" element={<ProfileLayoutPage />}>
+							<Route index element={<ProfileDetailPage />}></Route>
+							<Route path="edit" element={<ProtectedRoute><ProfileEditPage /></ProtectedRoute>}></Route>
+						</Route>
+						<Route path="/about" element={<AboutPage />}></Route>
+						<Route path="/login" element={<LoginPage />}></Route>
+						<Route path="/register" element={<RegisterPage />}></Route>
+						<Route path="*" element={<NotFound />}></Route>
+					</Routes>
+				</main>
+			</AuthProvider>
 		</HashRouter>
+
+
 
 
 	)

@@ -3,13 +3,15 @@ import "../styles/reset.css";
 import '../styles/App.css';
 import Wrapper from "../components/Wrapper";
 import {data, useParams} from "react-router-dom";
-import {useEffect} from "react";
+import {useEffect, useContext} from "react";
 import {useState} from "react";
 import { Link } from "react-router-dom";
+import {AuthContext} from "../contexts/AuthContext"
 
 function ProfileDetailPage() {
 	const {id} = useParams();
 	const [profile, setProfile] = useState(null)
+	const {isLogin} = useContext(AuthContext)
 
 	useEffect(() => {
 		fetch(`https://web.ics.purdue.edu/~ccallag/profile-app/fetch-data-with-id.php/?id=${id}`)
@@ -31,7 +33,7 @@ function ProfileDetailPage() {
 					<p><a href={`mailto${profile.email}`}>{profile.email}</a></p>
 					<p>{profile.email}</p>
 					<img src={profile.image_url} alt={profile.name}></img>
-					<Link to="edit">Edit</Link>
+					{isLogin && <Link to="edit">Edit</Link>}
 				</>
 			)}
 		</Wrapper>
