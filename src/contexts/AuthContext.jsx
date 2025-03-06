@@ -1,10 +1,14 @@
 import { createContext } from "react";
-import { useState } from "react";
+import { useState, useLayoutEffect } from "react";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [isLogin, setIsLogin] = useState(localStorage.getItem("isLogin") === "true" ? true : false);
+    const [isLogin, setIsLogin] = useState(false);
+    useLayoutEffect(() => {
+        const isLogin = localStorage.getItem("isLogin") === "true";
+        setIsLogin(isLogin)
+    }, [])
 
     const login = () => {
         setIsLogin(true);
@@ -18,8 +22,6 @@ export const AuthProvider = ({ children }) => {
                 if(data.message){
                     setIsLogin(false);
                     localStorage.setItem("isLogin", false)
-                }else{
-                    console.log(data)
                 }
             })
             .catch(error => {

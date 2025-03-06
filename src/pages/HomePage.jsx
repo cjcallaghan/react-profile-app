@@ -5,30 +5,39 @@ import Wrapper from "../components/Wrapper";
 import {useState} from "react";
 import {useEffect} from "react";
 import { Link } from "react-router-dom";
+import {useReducer} from "react";
+import {initialState, homeReducer} from "../reducers/homeReducer"
+
 
 
 function HomePage() {
 
-	const [profiles, setProfiles] = useState([]);
-	const [page, setPage] = useState(1);
-	const [count, setCount] = useState(1);
-	const [titles, setTitles] = useState([]);
-	const [title, setTitle] = useState("");
-	const [searchInput, setSearchInput] = useState("");
+	// const [profiles, setProfiles] = useState([]);
+	// const [page, setPage] = useState(1);
+	// const [count, setCount] = useState(1);
+	// const [titles, setTitles] = useState([]);
+	// const [title, setTitle] = useState("");
+	// const [search, setSearch] = useState("");
+
+	const [state, dispatch] = useReducer(homeReducer, initialState);
+	const {titles, title, search, profiles, page, count} = state
 
 	
 	useEffect(() => {
 		fetch("https://web.ics.purdue.edu/~ccallag/profile-app/get-titles.php")
 			.then(res => res.json())
-			.then(data => setTitles(data.titles));
+			.then((data) => {
+				// setTitles(data.titles)
+				dispatch({type: "SET_TITLES", payload: data.titles})
+			});
 	}, [])
 
 	
 	//update title on dropdown change
 	const handleTitleChange = (e) => {
-		setTitle(e.target.value);
-		setPage(1)
-		// setAnimation(true);
+		// setTitle(e.target.value);
+		// setPage(1)
+		dispatch({type: "SET_TITLE", payload: e.target.value})
 	};
 
 	
@@ -38,28 +47,30 @@ function HomePage() {
 	
 	const handleSearchChange = (e) => {
 		e.preventDefault();
-		setSearchInput(e.target.value);
-		setPage(1)
-		// setAnimation(true);
+		// setSearch(e.target.value);
+		// setPage(1)
+		dispatch({type: "SET_SEARCH", payload: e.target.value})
 	};
 	
 	
 
 	useEffect(() => {
-		fetch(`https://web.ics.purdue.edu/~ccallag/profile-app/fetch-data-with-filter.php?title=${title}&name=${searchInput}&page=${page}&limit=10`)
+		fetch(`https://web.ics.purdue.edu/~ccallag/profile-app/fetch-data-with-filter.php?title=${title}&name=${search}&page=${page}&limit=10`)
 			.then(res => res.json())
-			.then(data =>{ 
-				setProfiles(data.profiles)
-				setCount(data.count)
-				setPage(data.page)
+			.then((data) => { 
+				// setProfiles(data.profiles)
+				// setCount(data.count)
+				// setPage(data.page)
+				dispatch({type: "FETCH_DATA", payload: data})
 			});
-	},[title, searchInput, page])
+	},[title, search, page])
 
 	const handleClear = () => {
-		setTitle("");
-		setSearchInput("");
-		setPage(1)
+		// setTitle("");
+		// setSearch("");
+		// setPage(1)
 		// setAnimation(true);
+		dispatch({type: "CLEAR_FILTERS"});
 	}
 	
 	const buttonStyle = {
@@ -92,7 +103,7 @@ function HomePage() {
 				<div className="search-wrapper">
 					<div className="search-input">
 						<label htmlFor="search-input">Search:</label>
-						<input className="search-input" type="text" onChange={handleSearchChange} value={searchInput}></input>
+						<input className="search-input" type="text" onChange={handleSearchChange} value={search}></input>
 					</div>
 					<button style={buttonStyle} onClick={handleClear}>Clear</button>
 				</div>
@@ -106,9 +117,9 @@ function HomePage() {
 				{count === 0 && <p>No profiles found.</p>}
 				{count > 10 &&
 					<div id="pagination">
-						<button onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
+						<button onClick={() => dispatch({type: "SET_PAGE", payload: page - 1})} disabled={page === 1}>Previous</button>
 						<span>{page}/{Math.ceil(count/10)}</span>
-						<button onClick={() => setPage(page + 1)} disabled={page >= Math.ceil(count/10)}>Next</button>
+						<button onClick={() => dispatch({type: "SET_PAGE", payload: page + 1})} disabled={page >= Math.ceil(count/10)}>Next</button>
 					</div>
 				}	
 				
