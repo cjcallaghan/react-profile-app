@@ -7,6 +7,7 @@ import {useEffect} from "react";
 import { Link } from "react-router-dom";
 import {useReducer} from "react";
 import {initialState, homeReducer} from "../reducers/homeReducer"
+import useHomepageAPI from "../hooks/homepageAPI"
 
 
 
@@ -19,18 +20,19 @@ function HomePage() {
 	// const [title, setTitle] = useState("");
 	// const [search, setSearch] = useState("");
 
-	const [state, dispatch] = useReducer(homeReducer, initialState);
+	//const [state, dispatch] = useReducer(homeReducer, initialState);
+	const {dispatch, state} = useHomepageAPI();
 	const {titles, title, search, profiles, page, count} = state
 
 	
-	useEffect(() => {
-		fetch("https://web.ics.purdue.edu/~ccallag/profile-app/get-titles.php")
-			.then(res => res.json())
-			.then((data) => {
-				// setTitles(data.titles)
-				dispatch({type: "SET_TITLES", payload: data.titles})
-			});
-	}, [])
+	// useEffect(() => {
+	// 	fetch("https://web.ics.purdue.edu/~ccallag/profile-app/get-titles.php")
+	// 		.then(res => res.json())
+	// 		.then((data) => {
+	// 			// setTitles(data.titles)
+	// 			dispatch({type: "SET_TITLES", payload: data.titles})
+	// 		});
+	// }, [])
 
 	
 	//update title on dropdown change
@@ -54,16 +56,16 @@ function HomePage() {
 	
 	
 
-	useEffect(() => {
-		fetch(`https://web.ics.purdue.edu/~ccallag/profile-app/fetch-data-with-filter.php?title=${title}&name=${search}&page=${page}&limit=10`)
-			.then(res => res.json())
-			.then((data) => { 
-				// setProfiles(data.profiles)
-				// setCount(data.count)
-				// setPage(data.page)
-				dispatch({type: "FETCH_DATA", payload: data})
-			});
-	},[title, search, page])
+	// useEffect(() => {
+	// 	fetch(`https://web.ics.purdue.edu/~ccallag/profile-app/fetch-data-with-filter.php?title=${title}&name=${search}&page=${page}&limit=10`)
+	// 		.then(res => res.json())
+	// 		.then((data) => { 
+	// 			// setProfiles(data.profiles)
+	// 			// setCount(data.count)
+	// 			// setPage(data.page)
+	// 			dispatch({type: "FETCH_DATA", payload: data})
+	// 		});
+	// },[title, search, page])
 
 	const handleClear = () => {
 		// setTitle("");
