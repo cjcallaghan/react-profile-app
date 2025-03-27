@@ -16,6 +16,8 @@ import LoginPage from "./pages/LoginPage"
 import RegisterPage from "./pages/RegisterPage"
 import {AuthProvider} from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute"
+import { useSelector } from "react-redux";
+
 
 function App() {
 
@@ -26,7 +28,9 @@ function App() {
 	// 	setMode(!mode);
 	// }
 
-	const { mode } = useContext(ModeContext);
+	//const { mode } = useContext(ModeContext);
+	const mode = useSelector((state) => state.mode.mode)
+	console.log(mode)
 	return (
 
 
@@ -35,7 +39,7 @@ function App() {
 				<header>
 					<Navbar />
 				</header>
-				<main className={mode ? "darkMode" : ""}>
+				<main className={mode === "dark" ? "darkMode" : ""}>
 					<Routes>
 						<Route path="/" element={<HomePage />}></Route>
 						<Route path="/add-profile" element={<ProtectedRoute><AddProfilePage /></ProtectedRoute>}></Route>

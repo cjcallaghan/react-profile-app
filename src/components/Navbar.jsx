@@ -3,10 +3,18 @@ import {Link} from "react-router-dom";
 import {ModeContext} from "../contexts/ModeContext";
 import { useContext } from "react";
 import {AuthContext} from "../contexts/AuthContext"
+import { useSelector, useDispatch } from "react-redux";
+import {toggle} from "../redux/modeSlice"
 
 const Navbar = () => {
 
-    const {mode, handleModeChange} = useContext(ModeContext)
+    //const {mode, handleModeChange} = useContext(ModeContext)
+    const mode = useSelector((state) => state.mode.mode);
+    const dispatch = useDispatch();
+    const handleModeChange = () => {
+        dispatch(toggle());
+    }
+
     const {isLogin, logout} = useContext(AuthContext);
 
     return (
@@ -25,7 +33,7 @@ const Navbar = () => {
             </ul>
             {
             isLogin ? 
-            <button onClick={logout}>Logout</button> : 
+            <button onClick={logout}>Logout</button> :  
             <ul>
                 <li>
                     <Link to="/register">Register</Link>
@@ -35,7 +43,7 @@ const Navbar = () => {
                 </li>
             </ul>
             }
-            <button className={style.mode} onClick={(handleModeChange)}>Mode</button>
+            <button onClick={(handleModeChange)}>{mode === "light" ? "Light Mode" : "Dark Mode"}</button>
         </nav>
     );
 }
